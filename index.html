@@ -6,49 +6,49 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="style.css">
    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-   <title>Card Game CAPTCHA</title>
-</head>
-
-<body class="bg-dark text-light">
-   <div class="container py-5">
-      <div class="wrapper text-center">
-         <!-- Title -->
-         <p class="h3 fw-bold mb-3">To prove you're human, solve this simple game</p>
-         <p class="h5 mb-5">Choose the right card to complete the set</p>
-
-         <!-- Given Cards -->
-         <div class="row justify-content-center mb-4" id="givenCards">
-            
-            </div>
+   <title>Card Game CAPTCHA - Human Verification</title>
+   </head>
+   
+   <body class="bg-dark text-light d-flex align-items-center min-vh-100">
+      <div class="container py-5">
+         <div class="wrapper text-center max-width-800 mx-auto">
+            <!-- Heading Section -->
+            <header class="mb-5">
+               <h1 class="h3 fw-bold mb-3">Prove You're Human</h1>
+               <p class="h5 text-light-emphasis">Select the card that completes the set</p>
+               <p class="h5 text-light-emphasis">the card should complete the shapes</p>
+            </header>
+   
+            <!-- Game Area -->
+            <main>
+               <!-- Given Cards Section -->
+               <section class="mb-4">
+                  <h2 class="visually-hidden">Current Card Set</h2>
+                  <div class="row justify-content-center mb-4" id="givenCards" aria-label="Current cards in the set">
+                     <!-- Given cards will be dynamically inserted here -->
+                  </div>
+               </section>
+   
+               <!-- Instructions -->
+               <p class="h5 mb-4">Choose from the possible cards below</p>
+   
+               <!-- Possible Cards Section -->
+               <section>
+                  <h2 class="visually-hidden">Possible Cards to Complete the Set</h2>
+                  <div class="row justify-content-center" id="possibleCards" aria-label="Possible cards to select">
+                     <!-- Possible cards will be dynamically inserted here -->
+                  </div>
+               </section>
+   
+               <!-- Submit Button -->
+               <div class="mt-5">
+                  <button id="submitBtn" class="btn btn-success btn-lg px-5" aria-label="Submit card selection">
+                     Verify Selection
+                  </button>
+               </div>
+            </main>
          </div>
-
-         <!-- Instructions -->
-         <p class="h5 mb-4">Select from the possible cards below</p>
-
-         <!-- Possible Cards -->
-         <div class="row justify-content-center" id="possibleCards">
-            <div class="col-6 col-sm-3 mb-4">
-               <img id="card1" class="img-fluid shadow rounded possible-card" src="assests/Moon/Nouveau dossier/7.svg"
-                  alt="Card">
-            </div>
-            <div class="col-6 col-sm-3 mb-4">
-               <img id="card2" class="img-fluid shadow rounded possible-card" src="assests/Nuages/Nouveau dossier/4.svg"
-                  alt="Card">
-            </div>
-            <div class="col-6 col-sm-3 mb-4">
-               <img id="card3" class="img-fluid shadow rounded possible-card" src="assests/Wind/Nouveau dossier/8.svg"
-                  alt="Card">
-            </div>
-            <div class="col-6 col-sm-3 mb-4">
-               <img id="card4" class="img-fluid shadow rounded possible-card" src="assests/Snow/Nouveau dossier/3.svg"
-                  alt="Card">
-            </div>
-         </div>
-
-         <!-- Submit Button -->
-         <button class="btn btn-success btn-lg px-5">Submit</button>
       </div>
-   </div>
 
    <script src="script.js"></script>
    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
