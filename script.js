@@ -65,18 +65,14 @@ const cartesNumbers = generateRandomTable(4, 8, true, true);
 console.log(cartesNumbers)
 const cartesTypes = generateRandomTable(4, 4, false);
 console.log(cartesTypes)
-
+let cartesShapeObject = {
+   1:'Moon',
+   2:'Wind',
+   3:'Snow',
+   4:'Nuages'
+}
 let cartesShape = cartesTypes.map(type => {
-   switch (type) {
-      case 1: return `Moon`
-         break;
-      case 2: return `Wind`
-         break;
-      case 3: return `Snow`
-         break;
-      case 4: return `Nuages`
-         break;
-   }
+   return cartesShapeObject[type]
 })
 // console.log(cartesShape)
 let fullImgPath = cartesNumbers.map((num, index) => {
@@ -90,7 +86,7 @@ let fullImgPath = cartesNumbers.map((num, index) => {
 )
 let fullImgPathOfPossibleCards = cartesTypes.map((num, index) => {
    let img = `${num}.svg`
-   let shape = cartesShape[index]
+   let shape = cartesShape[num-1]
    if (num === 0) {
       img = `Empty.svg`
    }
@@ -104,14 +100,55 @@ fullImgPath.forEach(path => givenCards.innerHTML += ` <div class="col-6 col-sm-3
                   src="assests${path}" alt="Card"></div>
             `)
 let possibleCards = document.getElementById('possibleCards')
-fullImgPathOfPossibleCards.forEach(path => possibleCards.innerHTML += ` <div class="col-6 col-sm-3 mb-4 possibleCard"><img class="img-fluid shadow rounded"
-                  src="assests${path}" alt="Card"></div>
-            `)
+
+let rendreCards = (path) =>{
+   arr.forEach(path => possibleCards.innerHTML += ` <div class="col-6 col-sm-3 mb-4 possibleCard"><img class="img-fluid shadow rounded"
+                     src="assests${path}" alt="Card"></div>
+               `)
+
+}
+// rendreCards(fullImgPathOfPossibleCards)
+rendreCards(fullImgPathOfPossibleCards)
 // console.log(fullImgPathOfPossibleCards)
-// let possibleCardsSelec = possibleCards.querySelectorAll('.possibleCard')
-// // console.log(possibleCardsSelec)
-// possibleCardsSelec.forEach(card=>card.addEventListener('click',(e)=>{
-//    console.log(e.target)
-//    let img = 
-//    card.firstChild().classList.add('border-5', 'border-success')
-// }))
+let possibleCardsSelec = possibleCards.querySelectorAll('.possibleCard')
+// console.log(possibleCardsSelec)
+
+possibleCardsSelec.forEach(possibleCard=>possibleCard.addEventListener('click',(e)=>{
+   console.log(e.target.src)
+   let srcString = e.target.src
+   let userAnswer
+   if(srcString.includes('Snow')){
+      userAnswer = 'Snow'
+   } else if (srcString.includes('Wind')){
+      userAnswer = 'Wind'
+      
+   } else if (srcString.includes('Nuages')) {
+      userAnswer = 'Nuages'
+      
+   } else{
+      userAnswer = 'Moon'
+   }
+   processOperation(userAnswer)
+}))
+//function to check if the img correspend
+let setAnswerCart = ()=>{
+return   cartesShape[cartesNumbers.indexOf(0)]
+} 
+console.log(setAnswerCart())
+// let userAnswer = 'Moon'
+let chekcUserResponse = (userAnswer) =>{
+  return userAnswer == setAnswerCart() ? true : false
+}
+let sendResponse = (result) =>{
+   if(result){
+      console.log('passed')
+      //do other logic to go on 
+   }else{
+      console.log('failed')
+      location.reload(true)
+   }
+}
+let processOperation = (userAnswer) =>{
+      sendResponse(chekcUserResponse(userAnswer))
+}
+// processOperation(userAnswer)
