@@ -96,26 +96,36 @@ let fullImgPathOfPossibleCards = cartesTypes.map((num, index) => {
 // console.log(fullImgPath);
 let givenCards = document.getElementById('givenCards')
 
-fullImgPath.forEach(path => givenCards.innerHTML += ` <div class="col-6 col-sm-3 mb-4"><img class="img-fluid shadow rounded"
-                  src="assests${path}" alt="Card"></div>
-            `)
-let possibleCards = document.getElementById('possibleCards')
+// fullImgPath.forEach(path => givenCards.innerHTML += ` <div class="col-6 col-sm-3 mb-4"><img class="img-fluid shadow rounded"
+//                   src="assests${path}" alt="Card"></div>
+//             `)
+// let possibleCards = document.getElementById('possibleCards')
 
-let rendreCards = (path) =>{
-   arr.forEach(path => possibleCards.innerHTML += ` <div class="col-6 col-sm-3 mb-4 possibleCard"><img class="img-fluid shadow rounded"
+let rendreCards = (arr,container) =>{
+   arr.forEach(path => container.innerHTML += ` <div class="col-6 col-sm-3 mb-4 possibleCard"><img class="img-fluid shadow rounded "
                      src="assests${path}" alt="Card"></div>
                `)
 
 }
 // rendreCards(fullImgPathOfPossibleCards)
-rendreCards(fullImgPathOfPossibleCards)
+rendreCards(fullImgPath,givenCards)
+rendreCards(fullImgPathOfPossibleCards,possibleCards)
 // console.log(fullImgPathOfPossibleCards)
 let possibleCardsSelec = possibleCards.querySelectorAll('.possibleCard')
 // console.log(possibleCardsSelec)
-
+possibleCardsSelec.forEach(card=>{
+   let img = card.firstChild
+   img.classList.add('p-2')
+   img.setAttribute('data-bs-toggle', "modal")
+   img.setAttribute('data-bs-target', "#exampleModal")
+}
+)
 possibleCardsSelec.forEach(possibleCard=>possibleCard.addEventListener('click',(e)=>{
    console.log(e.target.src)
-   let srcString = e.target.src
+   let userChoosencard = e.target
+   let srcString = userChoosencard.src
+
+   // applyCardStyling(e.target)
    let userAnswer
    if(srcString.includes('Snow')){
       userAnswer = 'Snow'
@@ -128,27 +138,58 @@ possibleCardsSelec.forEach(possibleCard=>possibleCard.addEventListener('click',(
    } else{
       userAnswer = 'Moon'
    }
-   processOperation(userAnswer)
+   processOperation(userAnswer,userChoosencard)
+   
 }))
 //function to check if the img correspend
 let setAnswerCart = ()=>{
 return   cartesShape[cartesNumbers.indexOf(0)]
 } 
-console.log(setAnswerCart())
 // let userAnswer = 'Moon'
 let chekcUserResponse = (userAnswer) =>{
   return userAnswer == setAnswerCart() ? true : false
 }
-let sendResponse = (result) =>{
+// or
+// const myModalAlternative = new bootstrap.Modal('#myModal', options)
+let sendResponse = (result,img) =>{
+   
    if(result){
       console.log('passed')
-      //do other logic to go on 
+      // location.href='passed.com'
    }else{
       console.log('failed')
-      location.reload(true)
+      // location.reload(true)
    }
+   
+   applyCardStyling(result,img)
 }
-let processOperation = (userAnswer) =>{
-      sendResponse(chekcUserResponse(userAnswer))
+let processOperation = (userAnswer,img) =>{
+      sendResponse(chekcUserResponse(userAnswer),img)
 }
+
+const applyCardStyling = (result,card) =>{
+   if (result){
+      card.classList.add('border', 'border-5', 'border-success')
+      // setModal({
+      //    type:'success',
+      //    header:'Captcha is Passed successfully',
+      //    body:'you will be redirected to the website in 5 seconds'
+      // })
+   }else{
+      card.classList.add('border', 'border-5', 'border-danger')
+      // setModal({
+      //    type: 'danger',
+      //    header: 'Failed Captcha',
+      //    body: 'You choosed the wrong card, try again'
+      // })
+   }
+      
+}
+// let setModal = ({type,header,body}) =>{
+//    let modalTitle = document.querySelector('.modal-title')
+//    let modalBody = document.querySelector('.modal-body')
+//    modalTitle.textContent= header
+//    modalBody.textContent= body
+//    modalTitle.classList.add(`text-${type}`)
+// }
 // processOperation(userAnswer)
