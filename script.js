@@ -167,29 +167,55 @@ let processOperation = (userAnswer,img) =>{
       sendResponse(chekcUserResponse(userAnswer),img)
 }
 
-const applyCardStyling = (result,card) =>{
-   if (result){
+
+const setModalProps = ({ type, header, body, action }) => {
+   const modalTitle = document.querySelector('.modal-title');
+   const modalBody = document.querySelector('.modal-body');
+   // const modalActionButton = document.querySelector('#modalActionButton');
+
+   modalTitle.textContent = header;
+   modalTitle.classList.add(`text-${type}`);
+   modalBody.textContent = body;
+   // modalActionButton.classList.add(`text-${type}`);
+   // modalActionButton.textContent = action;
+};
+
+
+const applyCardStyling = (result, card) => {
+   if (result) {
       card.classList.add('border', 'border-5', 'border-success')
-      // setModal({
-      //    type:'success',
-      //    header:'Captcha is Passed successfully',
-      //    body:'you will be redirected to the website in 5 seconds'
-      // })
-   }else{
+      setModalProps({
+         type: 'success',
+         header: 'Captcha is Passed successfully',
+         body: `human verification is passed successfully`,
+         // action: 'close',
+      });
+         (() => {
+            let timeleft = 3
+            const modalBody = document.querySelector('.modal-body')
+            const timerInterval = setInterval(() => {
+               modalBody.textContent = `human verification is passed successfull
+   you will be redirected to the website in ${timeleft} seconds`
+               timeleft--
+               if (timeleft < 0) {
+                  clearInterval(timerInterval)
+                  window.location.href = 'passed.com'
+               }
+            }, 1000)
+         })()
+   } else {
       card.classList.add('border', 'border-5', 'border-danger')
-      // setModal({
-      //    type: 'danger',
-      //    header: 'Failed Captcha',
-      //    body: 'You choosed the wrong card, try again'
-      // })
+      setModalProps({
+         type: 'danger',
+         header: 'Failed Captcha',
+         body: 'You choosed the wrong card, you can try again after the reload',
+         // action: 'try again'
+      });
+      // (() => {
+      //    setTimeout(() => {
+      //       location.reload(true);
+      //    }, 3000); // 2 second delay
+      // })();
    }
-      
+
 }
-// let setModal = ({type,header,body}) =>{
-//    let modalTitle = document.querySelector('.modal-title')
-//    let modalBody = document.querySelector('.modal-body')
-//    modalTitle.textContent= header
-//    modalBody.textContent= body
-//    modalTitle.classList.add(`text-${type}`)
-// }
-// processOperation(userAnswer)
